@@ -13,10 +13,10 @@ class App extends Component {
     this.state=
     {
       cards:[{
-        src: "./images/WWK/jace, the mind sculptor.jpg"
+        src: "/images/WWK/jace, the mind sculptor.jpg"
       },
       {
-        src: "./images/WWK/stoneforge mystic.jpg"
+        src: "/images/WWK/stoneforge mystic.jpg"
       }],
       currentPack: "AHK",
       preloadedSets: new Map(),
@@ -105,7 +105,7 @@ class App extends Component {
         let index = Math.floor(Math.random() * currentSet.mythics.length);
         packContents.push(currentSet.mythics[index].imageName)
         let mythicRare = {}
-        mythicRare.src = "./images/" + currentSet.name + "/" + currentSet.mythics[index].imageName + ".jpg";
+        mythicRare.src = "/images/" + currentSet.name + "/" + currentSet.mythics[index].imageName + ".jpg";
         finalArray.push(mythicRare);
       }
       else
@@ -113,7 +113,7 @@ class App extends Component {
         let index = Math.floor(Math.random() * currentSet.rares.length);
         packContents.push(currentSet.rares[index].imageName)
         let rare = {}
-        rare.src = "./images/" + currentSet.name + "/" + currentSet.rares[index].imageName + ".jpg";
+        rare.src = "/images/" + currentSet.name + "/" + currentSet.rares[index].imageName + ".jpg";
         finalArray.push(rare);
       }
     }
@@ -125,7 +125,7 @@ class App extends Component {
       {
         packContents.push(currentSet.uncommons[index].imageName);
         let uncommon = {};
-        uncommon.src = "./images/" + currentSet.name + "/" + currentSet.uncommons[index].imageName + ".jpg";
+        uncommon.src = "/images/" + currentSet.name + "/" + currentSet.uncommons[index].imageName + ".jpg";
         finalArray.push(uncommon);
       }
     }
@@ -137,7 +137,7 @@ class App extends Component {
       {
         packContents.push(currentSet.commons[index].imageName)
         let common = {};
-        common.src = "./images/" + currentSet.name + "/" + currentSet.commons[index].imageName + ".jpg";
+        common.src = "/images/" + currentSet.name + "/" + currentSet.commons[index].imageName + ".jpg";
         finalArray.push(common);
       }
     }

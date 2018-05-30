@@ -2,7 +2,7 @@
   "name": "nostalgiamtg",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://phansa.github.io/NostalgiaMTGReact",
+  "homepage": "http://phansa.github.io/NostalgiaMTGReact",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^15.6.1",
