@@ -135,8 +135,6 @@ class App extends Component {
       let index = Math.floor(Math.random() * currentSet.commons.length);
       if(!(packContents.includes(currentSet.commons[index].imageName)))
       {
-        console.log(currentSet.commons[index].imageName)
-        console.log(packContents)
         packContents.push(currentSet.commons[index].imageName)
         let common = {};
         common.src = "./images/" + currentSet.name + "/" + currentSet.commons[index].imageName + ".jpg";
