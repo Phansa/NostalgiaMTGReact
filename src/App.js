@@ -103,7 +103,7 @@ class App extends Component {
       if(mythicUpgrade === 7)
       {	
         let index = Math.floor(Math.random() * currentSet.mythics.length);
-        packContents.push(currentSet.mythics[index])
+        packContents.push(currentSet.mythics[index].imageName)
         let mythicRare = {}
         mythicRare.src = "./images/" + currentSet.name + "/" + currentSet.mythics[index].imageName + ".jpg";
         finalArray.push(mythicRare);
@@ -111,7 +111,7 @@ class App extends Component {
       else
       {
         let index = Math.floor(Math.random() * currentSet.rares.length);
-        packContents.push(currentSet.rares[index])
+        packContents.push(currentSet.rares[index].imageName)
         let rare = {}
         rare.src = "./images/" + currentSet.name + "/" + currentSet.rares[index].imageName + ".jpg";
         finalArray.push(rare);
@@ -121,9 +121,9 @@ class App extends Component {
     while(packContents.length < 4)
     {
       let index = Math.floor(Math.random() * currentSet.uncommons.length);
-      if(!(currentSet.uncommons[index] in packContents))  
+      if(!(packContents.includes(currentSet.uncommons[index].imageName)))
       {
-        packContents.push(currentSet.uncommons[index]);
+        packContents.push(currentSet.uncommons[index].imageName);
         let uncommon = {};
         uncommon.src = "./images/" + currentSet.name + "/" + currentSet.uncommons[index].imageName + ".jpg";
         finalArray.push(uncommon);
@@ -133,9 +133,11 @@ class App extends Component {
     while(packContents.length < 15)
     {
       let index = Math.floor(Math.random() * currentSet.commons.length);
-      if(!(currentSet.commons[index] in packContents))
+      if(!(packContents.includes(currentSet.commons[index].imageName)))
       {
-        packContents.push(currentSet.commons[index])
+        console.log(currentSet.commons[index].imageName)
+        console.log(packContents)
+        packContents.push(currentSet.commons[index].imageName)
         let common = {};
         common.src = "./images/" + currentSet.name + "/" + currentSet.commons[index].imageName + ".jpg";
         finalArray.push(common);
