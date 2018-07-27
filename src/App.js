@@ -162,7 +162,8 @@ class App extends Component {
 
   createCard = (card) =>
   {
-    return <Card source={card['src']}/>
+    let foilValue = Math.floor(Math.random() * 512);
+    return <Card source={card['src']} foil={(foilValue === 1)}/>
   }
   
   render() {
