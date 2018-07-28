@@ -13,13 +13,57 @@ class App extends Component {
     this.state=
     {
       cards:[{
-        src: "/images/WWK/jace, the mind sculptor.jpg"
+        src: "/images/WWK/jace, the mind sculptor.jpg",
+        foilValue: false,
       },
       {
-        src: "/images/WWK/stoneforge mystic.jpg"
+        src: "/images/ALL/force of will.jpg",
+        foilValue: false,
+      },
+      {
+        src: "/images/NPH/batterskull.jpg",
+        foilValue: false,
+      },
+      {
+        src: "/images/WWK/stoneforge mystic.jpg",
+        foilValue: true,
       }],
-      currentPack: "AHK",
+      currentPack: { value: 'DOM', label: "Dominaria"},
       preloadedSets: new Map(),
+      options: [
+        { value: 'DOM', label: "Dominaria"},
+        { value: 'RIX', label: "Rivals of Ixalan"},
+        { value: 'XLN', label: "Ixalan"},
+        { value: 'HOU', label: "Hour of Devastation"},
+        { value: 'AKH', label: 'Amonkhet' },
+        { value: 'AER', label: 'Aether Revolt' },
+        { value: 'KLD', label: 'Kaladesh' },
+        { value: 'EMN', label: 'Eldritch Moon' },
+        { value: 'SOI', label: 'Shadows over Innistrad' },
+        { value: 'OGW', label: 'Oath of the Gatewatch' },
+        { value: 'BFZ', label: 'Battle for Zendikar'},
+        { value: 'DTK', label: 'Dragon of Tarkir'},
+        { value: 'FRF', label: 'Fate Reforged'},
+        { value: 'KTK', label: 'Khans of Tarkir'},
+        { value: 'JOU', label: 'Journey into Nyx'},
+        { value: 'BNG', label: 'Born of the Gods'},
+        { value: 'THS', label: 'Theros'},
+        { value: 'DGM', label: 'Dragon\'s Maze'},
+        { value: 'GTC', label: 'Gatecrash'},
+        { value: 'RTR', label: 'Return to Ravnica'},
+        { value: 'AVR', label: 'Avacyn Restored'},
+        { value: 'DKA', label: 'Dark Ascension'},
+        { value: 'ISD', label: 'Innistrad'},
+        { value: 'NPH', label: 'New Phyrexia'},
+        { value: 'MBS', label: 'Mirrodin Besieged'},
+        { value: 'SOM', label: 'Scars of Mirrodin'},
+        { value: 'ROE', label: 'Rise of the Eldrazi'},
+        { value: 'WWK', label: 'Worldwake'},
+        { value: 'ZEN', label: 'Zendikar'},
+        { value: 'ARB', label: 'Alara Reborn'},
+        { value: 'CON', label: 'Conflux'},
+        { value: 'ALA', label: 'Shards of Alara'}
+      ]
     }
     this.handlePackSelect = this.handlePackSelect.bind(this);
     this.openPack = this.openPack.bind(this);
@@ -40,15 +84,16 @@ class App extends Component {
 
   processPack = () =>
   {
+    var introTextExists = document.getElementById("IntroText");
+    if(introTextExists)
+    {
+      introTextExists.remove();
+    }
     var currentSet = this.state.currentPack.value;
     for(var set in allSets)
     {
       if(allSets[set].code === currentSet)
       {
-        if(currentSet === "CON")
-        {
-          currentSet = "CON_"
-        }
         if(!(this.state.preloadedSets.has(currentSet)))
         {
 
@@ -97,7 +142,11 @@ class App extends Component {
     let packContents = [];
     let finalArray = [];
     let mythicUpgrade = Math.floor(Math.random() * 8);
-
+    let currentSetImageName = currentSet.name;
+    if(currentSet.name === "CON")
+    {
+      currentSetImageName = "CON_"
+    }
     while(packContents.length < 1)
     {
       if(mythicUpgrade === 7)
@@ -105,7 +154,9 @@ class App extends Component {
         let index = Math.floor(Math.random() * currentSet.mythics.length);
         packContents.push(currentSet.mythics[index].imageName)
         let mythicRare = {}
-        mythicRare.src = "/images/" + currentSet.name + "/" + currentSet.mythics[index].imageName + ".jpg";
+        mythicRare.src = "/images/" + currentSetImageName + "/" + currentSet.mythics[index].imageName + ".jpg";
+        let foilValue = Math.floor(Math.random() * 512);
+        mythicRare.foilValue = (foilValue === 1);
         finalArray.push(mythicRare);
       }
       else
@@ -113,7 +164,9 @@ class App extends Component {
         let index = Math.floor(Math.random() * currentSet.rares.length);
         packContents.push(currentSet.rares[index].imageName)
         let rare = {}
-        rare.src = "/images/" + currentSet.name + "/" + currentSet.rares[index].imageName + ".jpg";
+        rare.src = "/images/" + currentSetImageName + "/" + currentSet.rares[index].imageName + ".jpg";
+        let foilValue = Math.floor(Math.random() * 512);
+        rare.foilValue = (foilValue === 1);
         finalArray.push(rare);
       }
     }
@@ -125,7 +178,9 @@ class App extends Component {
       {
         packContents.push(currentSet.uncommons[index].imageName);
         let uncommon = {};
-        uncommon.src = "/images/" + currentSet.name + "/" + currentSet.uncommons[index].imageName + ".jpg";
+        uncommon.src = "/images/" + currentSetImageName + "/" + currentSet.uncommons[index].imageName + ".jpg";
+        let foilValue = Math.floor(Math.random() * 512);
+        uncommon.foilValue = (foilValue === 1);
         finalArray.push(uncommon);
       }
     }
@@ -137,7 +192,9 @@ class App extends Component {
       {
         packContents.push(currentSet.commons[index].imageName)
         let common = {};
-        common.src = "/images/" + currentSet.name + "/" + currentSet.commons[index].imageName + ".jpg";
+        common.src = "/images/" + currentSetImageName + "/" + currentSet.commons[index].imageName + ".jpg";
+        let foilValue = Math.floor(Math.random() * 512);
+        common.foilValue = (foilValue === 1);
         finalArray.push(common);
       }
     }
@@ -162,31 +219,20 @@ class App extends Component {
 
   createCard = (card) =>
   {
-    let foilValue = Math.floor(Math.random() * 512);
-    return <Card source={card['src']} foil={(foilValue === 1)}/>
+    return <Card source={card['src']} foil={card['foilValue']}/>
   }
   
   render() {
+
     return (
       <div className="App">
         <div className="App-header">
           <h2>Nostalgia MTG</h2>
           <Select
           name="form-field-name"
-          value={this.state.currentPack}
           onChange={this.handlePackSelect}
-          options={[
-            { value: 'DOM', label: "Dominaria"},
-            { value: 'RIX', label: "Rivals of Ixalan"},
-            { value: 'XLN', label: "Ixalan"},
-            { value: 'HOU', label: "Hour of Devastation"},
-            { value: 'AKH', label: 'Amonkhet' },
-            { value: 'AER', label: 'Aether Revolt' },
-            { value: 'KLD', label: 'Kaladesh' },
-            { value: 'EMN', label: 'Eldritch Moon' },
-            { value: 'SOI', label: 'Shadows over Innistrad' },
-            { value: 'OGW', label: 'Oath of the Gatewatch' },
-          ]}
+          value={this.state.currentPack}
+          options={this.state.options}
         />
         <br />
 	      <button onClick={() => this.openPack()}> Open Pack </button>
@@ -194,6 +240,29 @@ class App extends Component {
         <div className="PackHolder">
           {this.createCards(this.state.cards)}
         </div>
+        <div className="IntroText" id="IntroText">
+          <p>
+            Select a pack from the dropdown and then click open pack. 
+            <br />
+            There is a chance that a card is foil and if so it's hue will 
+            be rotated. Stoneforge Mystic above is an example of the foil effect. 
+            <br /> Feel free
+            to report issues or make suggestions on the <a href="https://github.com/Phansa/NostalgiaMTGReact">
+            GitHub repository</a>.
+            <br />
+            </p>
+          </div>
+          <div className="Disclaimer">
+            <p>
+              NostalgiaMTG is unofficial Fan Content permitted under the Fan Content Policy. 
+              <br />
+              Not approved/endorsed by Wizards. 
+              <br /> 
+              Portions of the materials used are property of Wizards of the Coast. 
+              <br />
+              ©Wizards of the Coast LLC.
+            </p>
+          </div>
       </div>
     );
   }
