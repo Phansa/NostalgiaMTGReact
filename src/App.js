@@ -96,7 +96,6 @@ class App extends Component {
       {
         if(!(this.state.preloadedSets.has(currentSet)))
         {
-
           var newSet = {};
           var commons = [];
           var uncommons = [];
@@ -141,22 +140,34 @@ class App extends Component {
     let currentSet = this.state.preloadedSets.get(this.state.currentPack.value);
     let packContents = [];
     let finalArray = [];
-    let mythicUpgrade = Math.floor(Math.random() * 8);
+    let mythicUpgrade = Math.floor(Math.random() * 7);
     let currentSetImageName = currentSet.name;
     if(currentSet.name === "CON")
     {
       currentSetImageName = "CON_"
     }
+    let foilChance = Math.floor(Math.random() * 89);
+    let foilSlot = 0;
+    if(foilChance === 88)
+    {
+      foilSlot = Math.floor(Math.random() * 15);
+    }
     while(packContents.length < 1)
     {
-      if(mythicUpgrade === 7)
+      if(mythicUpgrade === 6)
       {	
         let index = Math.floor(Math.random() * currentSet.mythics.length);
         packContents.push(currentSet.mythics[index].imageName)
         let mythicRare = {}
         mythicRare.src = "/images/" + currentSetImageName + "/" + currentSet.mythics[index].imageName + ".jpg";
-        let foilValue = Math.floor(Math.random() * 512);
-        mythicRare.foilValue = (foilValue === 1);
+        if(finalArray.length + 1 === foilSlot)
+        {
+          mythicRare.foilValue = true;
+        }
+        else
+        {
+          mythicRare.foilValue = false;
+        }
         finalArray.push(mythicRare);
       }
       else
@@ -165,8 +176,14 @@ class App extends Component {
         packContents.push(currentSet.rares[index].imageName)
         let rare = {}
         rare.src = "/images/" + currentSetImageName + "/" + currentSet.rares[index].imageName + ".jpg";
-        let foilValue = Math.floor(Math.random() * 512);
-        rare.foilValue = (foilValue === 1);
+        if(finalArray.length + 1 === foilSlot)
+        {
+          rare.foilValue = true;
+        }
+        else
+        {
+          rare.foilValue = false;
+        }        
         finalArray.push(rare);
       }
     }
@@ -179,8 +196,14 @@ class App extends Component {
         packContents.push(currentSet.uncommons[index].imageName);
         let uncommon = {};
         uncommon.src = "/images/" + currentSetImageName + "/" + currentSet.uncommons[index].imageName + ".jpg";
-        let foilValue = Math.floor(Math.random() * 512);
-        uncommon.foilValue = (foilValue === 1);
+        if(finalArray.length + 1 === foilSlot)
+        {
+          uncommon.foilValue = true;
+        }
+        else
+        {
+          uncommon.foilValue = false;
+        }        
         finalArray.push(uncommon);
       }
     }
@@ -193,8 +216,14 @@ class App extends Component {
         packContents.push(currentSet.commons[index].imageName)
         let common = {};
         common.src = "/images/" + currentSetImageName + "/" + currentSet.commons[index].imageName + ".jpg";
-        let foilValue = Math.floor(Math.random() * 512);
-        common.foilValue = (foilValue === 1);
+        if(finalArray.length + 1 === foilSlot)
+        {
+          common.foilValue = true;
+        }
+        else
+        {
+          common.foilValue = false;
+        }  
         finalArray.push(common);
       }
     }
